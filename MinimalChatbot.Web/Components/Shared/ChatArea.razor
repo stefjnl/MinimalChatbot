@@ -1,0 +1,23 @@
+@using MinimalChatbot.Web.Models
+@using MinimalChatbot.Web.Components.Shared
+
+<div class="chat-area">
+    @if (Messages.Any())
+    {
+        @foreach (var message in Messages)
+        {
+            <MessageBubble Message="@message" />
+        }
+    }
+    else
+    {
+        <div class="welcome-message">
+            <p>Welcome to MinimalChatbot! How can I help you today?</p>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<ChatMessage> Messages { get; set; } = new();
+}

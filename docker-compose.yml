@@ -3,10 +3,10 @@ services:
   web:
     build:
       context: .
-      dockerfile: ObsidianAI.Web/Dockerfile
+      dockerfile: MinimalChatbot.Web/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__ObsidianAI: Data Source=/app/data/obsidianai.db
+      ConnectionStrings__MinimalChatbot: Data Source=/app/data/minimalchatbot.db
       LLM__Provider: ${LLM__Provider}
       LLM__LMStudio__Endpoint: ${LLM__LMStudio__Endpoint}
       LLM__LMStudio__ApiKey: ${LLM__LMStudio__ApiKey}
@@ -19,15 +19,15 @@ services:
       MCP_ENDPOINT: http://mcp-gateway:8033/mcp
       MicrosoftLearnMcp__Endpoint: ${MicrosoftLearnMcp__Endpoint}
     volumes:
-      - obsidianai-data:/app/data
+      - minimalchatbot-data:/app/data
     ports:
       - "5244:8080"
     depends_on:
       - mcp-gateway
   mcp-gateway:
     image: ghcr.io/modelcontextprotocol/gateway:latest
-    command: [ "mcp", "gateway", "run", "--transport", "streaming", "--port", "8033", "--servers", "obsidian" ]
+    command: [ "mcp", "gateway", "run", "--transport", "streaming", "--port", "8033", "--servers", "minimalchatbot" ]
     ports:
       - "8033:8033"
 volumes:
-  obsidianai-data:
+  minimalchatbot-data:
